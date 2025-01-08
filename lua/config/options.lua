@@ -3,4 +3,4 @@
 -- Add any additional options here
 
 -- Makes Neovim use the system clipboard
--- vim.o.clipboard = "unnamedplus"
+vim.g.doge_doc_standard_python = "google"

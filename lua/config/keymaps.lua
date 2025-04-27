@@ -3,14 +3,20 @@
 -- Add any additional keymaps here
 
 -- keymaps.lua (or your custom keymaps file)
-
+local wk = require("which-key")
+local opts = { silent = true, noremap = true }
 -- doge-generate
+
+wk.add({ { "<leader>D", group = "Docstring", icon = "" } })
 vim.keymap.set("n", "<leader>D", "<Plug>(doge-generate)", { desc = "Generate docstring" })
 
 -- Lsp Hover
+wk.add({ { "<leader>k", group = "Documentation", icon = "" } })
 vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover" })
 
 -- Vimspector
+wk.add({ { "<leader><F9>", icon = "" } })
+wk.add({ { "<leader><F8>", icon = "" } })
 vim.keymap.set("n", "<leader>db", "<Plug>VimspectorBreakpoints", { desc = "Opens Debug Window" })
 vim.keymap.set("n", "<F5>", "<Plug>VimspectorContinue", { noremap = false, silent = true })
 vim.keymap.set("n", "<F3>", "<Plug>VimspectorStop", { noremap = false, silent = true })
@@ -35,8 +41,9 @@ vim.keymap.set("n", "<leader>gd", ":Gitsigns diffthis<CR>", { noremap = true, si
 vim.keymap.set("n", "X", ":bdelete<CR>", { noremap = true, silent = true }) -- Show diff
 
 -- Run Python file with <leader>r
-vim.keymap.set("n", "<leader>r", ":w<CR>:!python %<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>R", function()
+wk.add({ { "<leader>r", group = "Python", icon = "" } })
+vim.keymap.set("n", "<leader>rr", ":w<CR>:!python %<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>rR", function()
   -- Save the file
   vim.cmd("w")
 
@@ -74,6 +81,114 @@ vim.keymap.set("n", "<leader>R", function()
   })
 end, { noremap = true, silent = true })
 
+-- Octo Github --
+
+-- in ~/.config/nvim/lua/config/keymaps.lua (somewhere after your Octo mappings)
+
+-- Register Octo group with GitHub icon explicitly
+wk.add({ { "<leader>G", group = "GitHub", icon = "" } })
+
+-- Issue commands
+vim.keymap.set(
+  "n",
+  "<leader>Gi",
+  "<cmd>Octo issue list<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Issues",
+  })
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>Gic",
+  "<cmd>Octo issue create<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Create Issue",
+  })
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>Gia",
+  "<cmd>Octo issue list<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "My Assigned Issues",
+  })
+)
+
+-- Pull Request commands
+vim.keymap.set(
+  "n",
+  "<leader>Gp",
+  "<cmd>Octo pr list<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Pull Requests",
+  })
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>Gpc",
+  "<cmd>Octo pr create<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Create Pull Request",
+  })
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>Gpr",
+  "<cmd>Octo review start<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Review PR",
+  })
+)
+
+-- Gist commands
+vim.keymap.set(
+  "n",
+  "<leader>Gg",
+  "<cmd>Octo gist list<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Gists",
+  })
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>Ggc",
+  "<cmd>Octo gist create<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Create Gist",
+  })
+)
+
+-- Notifications
+vim.keymap.set(
+  "n",
+  "<leader>Gn",
+  "<cmd>Octo notification<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "Notifications",
+  })
+)
+
+-- Repos and User Profile
+vim.keymap.set(
+  "n",
+  "<leader>Gr",
+  "<cmd>Octo repo view<CR>",
+  vim.tbl_extend("force", opts, {
+    desc = "View Repo",
+  })
+)
+
+wk.add({
+  { "<leader>K", hidden = true },
+})
+
+-- And also disable functionality of <leader>k
+vim.keymap.set("n", "<leader>K", "<nop>", { noremap = true, silent = true })
 --
 -- Define custom colors for LSP icons
 -- vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#FFD700" }) -- Gold for Class

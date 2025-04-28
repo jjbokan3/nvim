@@ -118,67 +118,67 @@ return {
   --     -- or to handle :VimspectorInstall [gadgets] from here.
   --   end,
   -- },
-  {
-    "saghen/blink.cmp",
-    opts = {
-      keymap = { preset = "default" },
-
-      appearance = {
-        use_nvim_cmp_as_default = true,
-        nerd_font_variant = "mono",
-      },
-
-      signature = { enabled = true },
-    },
-  },
-  {
-    "saghen/blink.cmp",
-    opts = {
-      -- existing stuff
-      keymap = { preset = "default" },
-      appearance = {
-        use_nvim_cmp_as_default = true,
-        nerd_font_variant = "mono",
-      },
-      signature = { enabled = true },
-
-      -- Add this `completion` table:
-      completion = {
-        menu = {
-          -- If you also want the menu to auto-show on typing:
-          auto_show = true,
-
-          draw = {
-            columns = {
-              -- Left column: label + label_description (with 1 space gap)
-              { "label", "label_description", gap = 5 },
-              -- Right column: kind_icon + kind
-              { "kind_icon", "kind" },
-            },
-            -- You can also tweak other settings like
-            -- `treesitter = { 'lsp' }` or `max_width`, etc.
-          },
-        },
-      },
-    },
-  },
-  {
-    "saghen/blink.cmp",
-    version = "v0.*",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    opts = {
-      keymap = {
-        -- Confirm the currently selected completion with Tab
-        ["<Tab>"] = { "accept", "fallback" },
-        -- Navigate the completion menu with Down and Up arrow keys
-        ["<Down>"] = { "select_next", "fallback" },
-        ["<Up>"] = { "select_prev", "fallback" },
-        -- Optional: navigate backward in the completion menu with Shift + Tab
-        ["<S-Tab>"] = { "select_prev", "fallback" },
-      },
-      -- Other configuration options...
-    },
-  },
+  -- {
+  --   "saghen/blink.cmp",
+  --   opts = {
+  --     keymap = { preset = "default" },
+  --
+  --     appearance = {
+  --       use_nvim_cmp_as_default = true,
+  --       nerd_font_variant = "mono",
+  --     },
+  --
+  --     signature = { enabled = true },
+  --   },
+  -- },
+  -- {
+  --   "saghen/blink.cmp",
+  --   opts = {
+  --     -- existing stuff
+  --     keymap = { preset = "default" },
+  --     appearance = {
+  --       use_nvim_cmp_as_default = true,
+  --       nerd_font_variant = "mono",
+  --     },
+  --     signature = { enabled = true },
+  --
+  --     -- Add this `completion` table:
+  --     completion = {
+  --       menu = {
+  --         -- If you also want the menu to auto-show on typing:
+  --         auto_show = true,
+  --
+  --         draw = {
+  --           columns = {
+  --             -- Left column: label + label_description (with 1 space gap)
+  --             { "label", "label_description", gap = 5 },
+  --             -- Right column: kind_icon + kind
+  --             { "kind_icon", "kind" },
+  --           },
+  --           -- You can also tweak other settings like
+  --           -- `treesitter = { 'lsp' }` or `max_width`, etc.
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
+  -- {
+  --   "saghen/blink.cmp",
+  --   version = "v0.*",
+  --   dependencies = { "rafamadriz/friendly-snippets" },
+  --   opts = {
+  --     keymap = {
+  --       -- Confirm the currently selected completion with Tab
+  --       ["<Tab>"] = { "accept", "fallback" },
+  --       -- Navigate the completion menu with Down and Up arrow keys
+  --       ["<Down>"] = { "select_next", "fallback" },
+  --       ["<Up>"] = { "select_prev", "fallback" },
+  --       -- Optional: navigate backward in the completion menu with Shift + Tab
+  --       ["<S-Tab>"] = { "select_prev", "fallback" },
+  --     },
+  --     -- Other configuration options...
+  --   },
+  -- },
   {
     "stevearc/conform.nvim",
     opts = function(_, opts)
@@ -240,10 +240,14 @@ return {
       require("windows").setup()
     end,
   },
-  {
-    "OXY2DEV/markview.nvim",
-    lazy = false,
-  },
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   lazy = false,
+  --   config = function()
+  --     require("markview").setup()
+  --     require("markview.extras.checkboxes").setup()
+  --   end,
+  -- },
   {
     "ldelossa/gh.nvim",
     dependencies = {
@@ -370,5 +374,125 @@ return {
     config = function()
       require("octo").setup()
     end,
+  },
+  -- { "tpope/vim-dadbod", lazy = true },
+  -- {
+  --   "kristijanhusak/vim-dadbod-ui",
+  --   dependencies = { "tpope/vim-dadbod" },
+  --   ft = "sql", -- load when you open a .sql file
+  --   config = function()
+  --     -- your connection
+  --     vim.b.db = "postgresql://gist:password@localhost:5433/gis"
+  --
+  --     -- auto-register this buffer with DBUI
+  --     vim.api.nvim_create_autocmd("FileType", {
+  --       pattern = "sql",
+  --       callback = function()
+  --         vim.cmd("DBUIFindBuffer") -- registers b:db ↦ this buffer  [oai_citation_attribution:0‡GitHub](https://github.com/kristijanhusak/vim-dadbod-ui/blob/master/doc/dadbod-ui.txt?utm_source=chatgpt.com)
+  --       end,
+  --     })
+  --
+  --     -- keep your execute mapping
+  --     vim.keymap.set(
+  --       { "n", "v" },
+  --       "<leader>zz",
+  --       "<Plug>(DBUI_ExecuteQuery)",
+  --       { buffer = true, desc = "dadbod: run SQL under cursor/selection" }
+  --     )
+  --   end,
+  -- },
+  {
+    "tpope/vim-dadbod",
+    lazy = true,
+  },
+
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = { "tpope/vim-dadbod" },
+    lazy = true,
+    ft = "sql", -- load on FileType=sql
+    cmd = { "DBUI", "DBUIToggle", "DBUIFindBuffer" }, -- also load on these commands
+    config = function()
+      -- 1) whenever you open a .sql buffer, register it (and get the prompt)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "sql",
+        callback = function()
+          vim.cmd("DBUIFindBuffer") -- “Select db to assign this buffer to”  [oai_citation_attribution:0‡GitHub](https://github.com/kristijanhusak/vim-dadbod-ui/blob/master/doc/dadbod-ui.txt)
+        end,
+      })
+
+      -- 2) your existing execution mapping
+      -- vim.keymap.set(
+      --   { "n", "v" },
+      --   "<leader>zz",
+      --   "<Plug>(DBUI_ExecuteQuery)",
+      --   { buffer = true, desc = "dadbod: run SQL under cursor/selection" }
+      -- )
+    end,
+  },
+  {
+    "kristijanhusak/vim-dadbod-completion",
+    ft = { "sql", "mysql", "plsql" },
+    dependencies = {
+      "tpope/vim-dadbod",
+      "kristijanhusak/vim-dadbod-ui",
+    },
+    -- no extra config needed here; the plugin exposes itself as a cmp source
+  },
+  {
+    "saghen/blink.compat",
+    lazy = true,
+    opts = {}, -- no extra config needed
+  },
+
+  {
+    "saghen/blink.cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "saghen/blink.compat", -- the compatibility layer
+      "kristijanhusak/vim-dadbod-completion", -- your DB schema/table/column source
+    },
+    opts = {
+      -- Override the default keymaps so that TAB confirms the current item:
+      keymap = {
+        -- start from the “enter” preset (arrows move, Enter confirms)
+        preset = "enter",
+        -- now use <Tab> to confirm instead of <CR>
+        ["<Tab>"] = { "select_and_accept" }, --  [oai_citation_attribution:0‡Reddit](https://www.reddit.com/r/neovim/comments/1hfotru/nvimcmp_super_tab_in_blink/?utm_source=chatgpt.com)
+        -- optionally, shift-tab to go backwards:
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+      },
+      completion = {
+        menu = {
+          auto_show = true, -- don’t hide as you type  [oai_citation_attribution:1‡GitHub](https://github.com/Saghen/blink.cmp/issues/806?utm_source=chatgpt.com)
+        },
+      },
+
+      -- 1) list your *active* completion sources
+      sources = {
+        default = {
+          "lsp", -- LSP completions
+          "path", -- filesystem paths
+          "buffer", -- buffer words
+          "vim-dadbod-completion", -- your DB schema/table/col source
+        },
+
+        -- 2) register how to call that last provider
+        providers = {
+          ["vim-dadbod-completion"] = {
+            name = "vim-dadbod-completion", -- must match the string above
+            module = "blink.compat.source", -- use the compat shim  [oai_citation_attribution:0‡GitHub](https://github.com/saghen/blink.compat)
+            opts = {
+              -- any nvim-cmp style options you’d pass to the source,
+              -- e.g. { cache = true, limit = 100 }
+            },
+            score_offset = 200,
+          },
+        },
+      },
+
+      -- you can also add other top-level blink.cmp settings here
+      -- like keymap, appearance, signature, etc.
+    },
   },
 }

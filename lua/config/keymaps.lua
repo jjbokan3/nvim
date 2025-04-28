@@ -198,3 +198,62 @@ vim.keymap.set("n", "<leader>K", "<nop>", { noremap = true, silent = true })
 -- vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#FF4500" }) -- Orange for Keyword
 -- vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#8A2BE2" }) -- Purple for Field
 -- vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = "#00CED1" }) -- Teal for Module
+--
+
+-- vim.keymap.set(
+--   "n",
+--   "<leader>zz",
+--   ":normal vip<CR><PLUG>(DBUI_ExecuteQuery)",
+--   { desc = "run query under cursor (mnemonic: Go)" }
+-- )
+
+-- vim.keymap.set("n", "<leader>du", "<cmd>DBUIToggle<cr>", {
+--   desc = "DBUI: toggle database UI",
+-- })
+--
+-- -- run the “paragraph” under your cursor as a query
+-- vim.keymap.set("n", "<localleader>g", function()
+--   -- ensure this buffer is known to DBUI (fires the lazy loader too)
+--   vim.cmd("DBUIFindBuffer")
+--   -- select the current paragraph
+--   vim.cmd("normal! vip")
+--   -- execute it
+--   vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(DBUI_ExecuteQuery)", true, true, true), "")
+-- end, {
+--   desc = "DBUI: run paragraph under cursor",
+-- })
+--
+--
+
+-- toggle the DBUI sidebar
+vim.keymap.set("n", "<leader>du", "<cmd>DBUIToggle<cr>", {
+  desc = "DBUI: toggle database UI",
+})
+
+-- run the “paragraph” under your cursor as a query
+vim.keymap.set("n", "<localleader>g", function()
+  -- ensure this buffer is registered & plugin is loaded
+  vim.cmd("DBUIFindBuffer")
+  -- select the current paragraph
+  vim.cmd("normal! vip")
+  -- execute it
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(DBUI_ExecuteQuery)", true, true, true), "")
+end, {
+  desc = "DBUI: run paragraph under cursor",
+})
+
+local map = vim.keymap.set
+
+map("n", "<leader>z", "<cmd>Telekasten panel<CR>", { desc = "Telekasten: panel" })
+
+-- Most used
+map("n", "<leader>zf", "<cmd>Telekasten find_notes<CR>", { desc = "Telekasten: find notes" })
+map("n", "<leader>zg", "<cmd>Telekasten search_notes<CR>", { desc = "Telekasten: grep notes" })
+map("n", "<leader>zn", "<cmd>Telekasten new_note<CR>", { desc = "Telekasten: new note" })
+map("n", "<leader>zl", "<cmd>Telekasten follow_link<CR>", { desc = "Telekasten: follow link" })
+map("n", "<leader>zd", "<cmd>Telekasten goto_today<CR>", { desc = "Telekasten: today’s note" })
+map("n", "<leader>zc", "<cmd>Telekasten show_calendar<CR>", { desc = "Telekasten: calendar" })
+map("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>", { desc = "Telekasten: backlinks" })
+
+-- optional insert-mode mapping for links
+map("i", "[[", "<cmd>Telekasten insert_link<CR>", { desc = "Telekasten: insert link" })

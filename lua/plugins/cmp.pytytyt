@@ -1,0 +1,50 @@
+-- -- ~/.config/nvim/lua/plugins/cmp.lua
+-- return {
+--   {
+--     -- 1) the core completion engine
+--     "hrsh7th/nvim-cmp",
+--     event = "InsertEnter", -- load when you first enter insert mode
+--     dependencies = {
+--       "hrsh7th/cmp-buffer", -- buffer completions
+--       "hrsh7th/cmp-path", -- filesystem paths
+--       "kristijanhusak/vim-dadbod-completion", -- your SQL schema/table/col source
+--       -- (add other sources you like here)
+--     },
+--     config = function()
+--       local cmp = require("cmp")
+--
+--       -- a) Global settings for all filetypes:
+--       cmp.setup({
+--         snippet = {
+--           -- you can hook in luasnip or other snippet engine here
+--           expand = function(args)
+--             vim.fn["luasnip#anonymous"](args.body)
+--           end,
+--         },
+--         mapping = cmp.mapping.preset.insert({
+--           ["<C-Space>"] = cmp.mapping.complete(),
+--           ["<CR>"] = cmp.mapping.confirm({ select = true }),
+--           ["<Tab>"] = cmp.mapping.select_next_item(),
+--           ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+--         }),
+--         sources = cmp.config.sources({
+--           { name = "nvim_lsp" }, -- if you use LSP
+--           { name = "luasnip" }, -- if you use luasnip
+--         }, {
+--           { name = "buffer" },
+--           { name = "path" },
+--         }),
+--       })
+--
+--       -- b) Filetype‐specific override for SQL
+--       cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
+--         sources = cmp.config.sources({
+--           { name = "vim-dadbod-completion" }, -- schema.table.col completion
+--         }, {
+--           { name = "buffer" },
+--           { name = "path" },
+--         }),
+--       })
+--     end,
+--   },
+-- }

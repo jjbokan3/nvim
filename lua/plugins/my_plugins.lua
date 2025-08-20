@@ -77,17 +77,17 @@ return {
   },
   {
     "linux-cultist/venv-selector.nvim",
+    branch = "regexp",
+    lazy = false,
     dependencies = {
       "neovim/nvim-lspconfig",
       "mfussenegger/nvim-dap",
-      "mfussenegger/nvim-dap-python", --optional
+      "mfussenegger/nvim-dap-python", -- optional
       { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
     },
-    lazy = false,
-    branch = "regexp", -- This is the regexp branch, use this for the new version
-    config = function()
-      require("venv-selector").setup()
-    end,
+    opts = {
+      -- you can add config here, or leave empty
+    },
     keys = {
       { ",v", "<cmd>VenvSelect<cr>" },
     },
@@ -240,14 +240,19 @@ return {
       require("windows").setup()
     end,
   },
-  -- {
-  --   "OXY2DEV/markview.nvim",
-  --   lazy = false,
-  --   config = function()
-  --     require("markview").setup()
-  --     require("markview.extras.checkboxes").setup()
-  --   end,
-  -- },
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    priority = 1000, -- higher priority = load earlier
+    config = function()
+      require("markview").setup({
+        experimental = {
+          check_rtp_message = false, -- (optional) hide message
+        },
+      })
+      require("markview.extras.checkboxes").setup()
+    end,
+  },
   {
     "ldelossa/gh.nvim",
     dependencies = {
@@ -414,12 +419,12 @@ return {
     cmd = { "DBUI", "DBUIToggle", "DBUIFindBuffer" }, -- also load on these commands
     config = function()
       -- 1) whenever you open a .sql buffer, register it (and get the prompt)
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "sql",
-        callback = function()
-          vim.cmd("DBUIFindBuffer") -- “Select db to assign this buffer to”  [oai_citation_attribution:0‡GitHub](https://github.com/kristijanhusak/vim-dadbod-ui/blob/master/doc/dadbod-ui.txt)
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   pattern = "sql",
+      --   callback = function()
+      --     vim.cmd("DBUIFindBuffer") -- “Select db to assign this buffer to”  [oai_citation_attribution:0‡GitHub](https://github.com/kristijanhusak/vim-dadbod-ui/blob/master/doc/dadbod-ui.txt)
+      --   end,
+      -- })
 
       -- 2) your existing execution mapping
       -- vim.keymap.set(
@@ -494,5 +499,75 @@ return {
       -- you can also add other top-level blink.cmp settings here
       -- like keymap, appearance, signature, etc.
     },
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional, for file icons
+    event = "VeryLazy", -- or whatever trigger you prefer
+    config = function()
+      -- either inline:
+      -- require("eviline")   -- if you created lua/eviline.lua (see below)
+      -- Or, if you just want to paste the example here:
+      -- require("lualine").setup({ … all of your config table … })
+
+      -- I recommend the separate-file approach:
+      require("plugins.evil_lualine")
+    end,
+  },
+  {
+    "ldelossa/gh.nvim",
+    dependencies = {
+      {
+        "ldelossa/litee.nvim",
+        config = function()
+          require("litee.lib").setup()
+        end,
+      },
+    },
+    config = function()
+      require("litee.gh").setup({
+        -- deprecated, around for compatability for now.
+        jump_mode = "invoking",
+        -- remap the arrow keys to resize any litee.nvim windows.
+        map_resize_keys = false,
+        -- do not map any keys inside any gh.nvim buffers.
+        disable_keymaps = false,
+        -- the icon set to use.
+        icon_set = "default",
+        -- any custom icons to use.
+        icon_set_custom = nil,
+        -- whether to register the @username and #issue_number omnifunc completion
+        -- in buffers which start with .git/
+        git_buffer_completion = true,
+        -- defines keymaps in gh.nvim buffers.
+        keymaps = {
+          -- when inside a gh.nvim panel, this key will open a node if it has
+          -- any futher functionality. for example, hitting <CR> on a commit node
+          -- will open the commit's changed files in a new gh.nvim panel.
+          open = "<CR>",
+          -- when inside a gh.nvim panel, expand a collapsed node
+          expand = "zo",
+          -- when inside a gh.nvim panel, collpased and expanded node
+          collapse = "zc",
+          -- when cursor is over a "#1234" formatted issue or PR, open its details
+          -- and comments in a new tab.
+          goto_issue = "gd",
+          -- show any details about a node, typically, this reveals commit messages
+          -- and submitted review bodys.
+          details = "d",
+          -- inside a convo buffer, submit a comment
+          submit_comment = "<C-s>",
+          -- inside a convo buffer, when your cursor is ontop of a comment, open
+          -- up a set of actions that can be performed.
+          actions = "<C-a>",
+          -- inside a thread convo buffer, resolve the thread.
+          resolve_thread = "<C-r>",
+          -- inside a gh.nvim panel, if possible, open the node's web URL in your
+          -- browser. useful particularily for digging into external failed CI
+          -- checks.
+          goto_web = "gx",
+        },
+      })
+    end,
   },
 }
